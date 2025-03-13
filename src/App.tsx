@@ -1,26 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
+import RegistrationForm from './pages/RegistrationForm/RegistrationForm';
+import Timetable from './pages/Timetable/Timetable';
+import LoginForm from './pages/LoginForm/LoginForm';
+import ConfirmationNumber from './pages/ConfirmationNumber/ConfirmationNumber';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<RegistrationForm />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/confirmationnumber" element={<ConfirmationNumber />} />
+          <Route path="/timetable" element={<Timetable />} />
+        </Routes>
+      </Router>
   );
-}
+};
 
 export default App;
