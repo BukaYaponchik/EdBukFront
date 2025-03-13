@@ -1,0 +1,10 @@
+.timetable-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: white; /* Устанавливаем белый фон */
+    color: black; /* Измените цвет текста на черный для лучшей видимости на белом фоне */
+    text-shadow: none; /* Убираем тень текста, если она не нужна на белом фоне */
+}
