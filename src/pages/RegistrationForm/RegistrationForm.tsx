@@ -6,17 +6,27 @@ const RegistrationForm: React.FC = () => {
     const navigate = useNavigate();
     const [isAgreed, setIsAgreed] = useState(false);
     const [formData, setFormData] = useState({
-        fullName: '',
+        firstName: '',
+        lastName: '',
         email: '',
         phone: '+7 ',
         password: ''
     });
     const [errors, setErrors] = useState({
+        firstName: '',
+        lastName: '',
         phone: '',
         email: '',
         password: ''
     });
     const [showPassword, setShowPassword] = useState(false);
+
+    // Валидация имени/фамилии
+    const validateName = (name: string) => {
+        if (!name.trim()) return 'Обязательное поле';
+        if (!/^[а-яА-ЯёЁ\s]+$/.test(name)) return 'Только русские буквы';
+        return '';
+    };
 
     // Валидация номера телефона
     const validatePhone = (phone: string) => {
@@ -34,7 +44,8 @@ const RegistrationForm: React.FC = () => {
     // Валидация пароля
     const validatePassword = (password: string) => {
         if (password.length < 8 || password.length > 24) return 'Длина пароля 8-24 символа';
-        if (!/[A-Za-z]/.test(password) || !/\d/.test(password)) return 'Пароль должен содержать латинские буквы и цифры';
+        if (!/[\p{L}]/u.test(password) || !/\d/.test(password))
+            return 'Пароль должен содержать буквы и цифры';
         return '';
     };
 
@@ -75,6 +86,8 @@ const RegistrationForm: React.FC = () => {
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         const finalValidation = {
+            firstName: validateName(formData.firstName),
+            lastName: validateName(formData.lastName),
             phone: validatePhone(formData.phone),
             email: validateEmail(formData.email),
             password: validatePassword(formData.password)
@@ -87,22 +100,55 @@ const RegistrationForm: React.FC = () => {
         }
     };
 
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value.replace(/[а-яА-Я]/g, '');
+        setFormData({...formData, email: value});
+        setErrors({...errors, email: validateEmail(value)});
+    };
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+
+        // Фильтруем ввод: оставляем только русские буквы и пробелы
+        const filteredValue = value
+            .replace(/[^а-яА-ЯёЁ\s]/g, '') // Разрешаем русские буквы и пробелы
+            .replace(/\s{2,}/g, ' ');      // Запрещаем множественные пробелы
+
+        setFormData({...formData, [name]: filteredValue});
+        setErrors({...errors, [name]: filteredValue.trim() ? '' : 'Обязательное поле'});
+    };
+
     return (
         <div className="registration-page">
             <form className="registration-form" onSubmit={handleSubmit}>
                 <h1>Регистрация</h1>
 
-                {/* Поле ФИО */}
+                {/* Поле Имя */}
                 <div className="form-group">
-                    <label htmlFor="fullName">ФИО:</label>
+                    <label htmlFor="firstName">Имя:</label>
                     <input
                         type="text"
-                        id="fullName"
-                        name="fullName"
-                        value={formData.fullName}
-                        onChange={handleChange}
+                        id="firstName"
+                        name="firstName"
+                        value={formData.firstName}
+                        onChange={handleNameChange}
                         required
                     />
+                    {errors.firstName && <div className="error-message">{errors.firstName}</div>}
+                </div>
+
+                {/* Поле Фамилия */}
+                <div className="form-group">
+                    <label htmlFor="lastName">Фамилия:</label>
+                    <input
+                        type="text"
+                        id="lastName"
+                        name="lastName"
+                        value={formData.lastName}
+                        onChange={handleNameChange}
+                        required
+                    />
+                    {errors.lastName && <div className="error-message">{errors.lastName}</div>}
                 </div>
 
                 {/* Поле Email */}
@@ -113,7 +159,7 @@ const RegistrationForm: React.FC = () => {
                         id="email"
                         name="email"
                         value={formData.email}
-                        onChange={handleChange}
+                        onChange={handleEmailChange} // Измененный обработчик
                         required
                     />
                     {errors.email && <div className="error-message">{errors.email}</div>}

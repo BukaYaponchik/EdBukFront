@@ -21,9 +21,11 @@ const LoginForm: React.FC = () => {
         return '';
     };
 
-    // Валидация пароля
+    // Валидация пароля с русскими буквами
     const validatePassword = (password: string) => {
-        if (password.length < 8) return 'Пароль должен быть не менее 8 символов';
+        if (password.length < 8 || password.length > 24) return 'Длина пароля 8-24 символа';
+        if (!/[\p{L}]/u.test(password) || !/\d/.test(password))
+            return 'Пароль должен содержать буквы и цифры';
         return '';
     };
 
