@@ -1,6 +1,6 @@
 const API_BASE = 'http://147.45.103.3:1880';
 
-export const api = {
+export const apiSMS = {
     async post(url: string, data: any) {
         const response = await fetch(`${API_BASE}${url}`, {
             method: 'POST',
@@ -15,8 +15,8 @@ export const api = {
     }
 };
 
-// Эндпоинты
-export const ENDPOINTS = {
-    LOGIN: '/login',
-    REGISTER: '/register',
+// Эндпоинты Node-RED
+export const ENDPOINTSSMS = {
+    VERIFY_CODE: '/verify-code',
+    RESEND_CODE: '/resend-code'
 };

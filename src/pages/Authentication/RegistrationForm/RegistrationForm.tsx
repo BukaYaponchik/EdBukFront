@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../GeneralStyles/Indication.css';
+import '../../GeneralStyles/Indication.css';
 
 const RegistrationForm: React.FC = () => {
     const navigate = useNavigate();
@@ -83,17 +83,19 @@ const RegistrationForm: React.FC = () => {
         if (name === 'password') setErrors({...errors, password: validatePassword(value)});
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const finalValidation = {
             firstName: validateName(formData.firstName),
             lastName: validateName(formData.lastName),
             phone: validatePhone(formData.phone),
             email: validateEmail(formData.email),
-            password: validatePassword(formData.password)
-        };
+            password: validatePassword(formData.password) };
 
         if (Object.values(finalValidation).every(x => x === '')) {
+            // Сохраняем данные во временное хранилище
+            sessionStorage.setItem('tempRegistrationData', JSON.stringify(formData));
+            // Перенаправляем на подтверждение номера
             navigate('/confirmationnumber');
         } else {
             setErrors(finalValidation);
@@ -117,6 +119,11 @@ const RegistrationForm: React.FC = () => {
         setFormData({...formData, [name]: filteredValue});
         setErrors({...errors, [name]: filteredValue.trim() ? '' : 'Обязательное поле'});
     };
+
+    useEffect(() => {
+        // Очищаем временные данные при загрузке формы
+        sessionStorage.removeItem('tempRegistrationData');
+    }, []);
 
     return (
         <div className="registration-page">

@@ -1,0 +1,4 @@
+.page-content {
+    padding: 40px;
+    color: white; /* Наследуем белый цвет текста */
+}

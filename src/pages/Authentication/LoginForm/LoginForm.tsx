@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../GeneralStyles/Indication.css';
+import '../../GeneralStyles/Indication.css';
+import { api, ENDPOINTS } from '../../../API/api';
+import { useAuth } from '../../../Context/AuthContext';
 
 const LoginForm: React.FC = () => {
     const navigate = useNavigate();
@@ -13,6 +15,7 @@ const LoginForm: React.FC = () => {
         phone: '',
         password: ''
     });
+    const { login } = useAuth();
 
     // Валидация номера телефона
     const validatePhone = (phone: string) => {
@@ -61,7 +64,7 @@ const LoginForm: React.FC = () => {
         if (name === 'password') setErrors({...errors, password: validatePassword(value)});
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const finalValidation = {
             phone: validatePhone(formData.phone),
@@ -69,7 +72,26 @@ const LoginForm: React.FC = () => {
         };
 
         if (Object.values(finalValidation).every(x => x === '')) {
-            navigate('/confirmationnumber');
+            try {
+                const response = await api.post(ENDPOINTS.LOGIN, {
+                    phone: formData.phone.replace(/\D/g, ''),
+                    password: formData.password
+                });
+
+                // Вызываем метод login из контекста
+                login({
+                    id: response.id,
+                    phone: response.phone,
+                    role: response.role,
+                });
+
+                navigate('/timetable');
+            } catch (error) {
+                setErrors({
+                    ...errors,
+                    password: 'Неверный телефон или пароль'
+                });
+            }
         } else {
             setErrors(finalValidation);
         }
@@ -131,7 +153,7 @@ const LoginForm: React.FC = () => {
                 <div className="login-prompt">
                     У вас нет аккаунта?{' '}
                     <a
-                        href="/"
+                        href="/public"
                         onClick={(e) => {
                             e.preventDefault();
                             navigate('/');
