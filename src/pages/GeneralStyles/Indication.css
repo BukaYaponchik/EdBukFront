@@ -29,6 +29,10 @@
     font-family: 'Nunito Sans', sans-serif;
 }
 
+.registration-form * {
+    color: #333;
+}
+
 .form-group {
     width: 100%;
     margin-bottom: 15px;
@@ -51,6 +55,8 @@
     border-radius: 4px;
     font-size: 16px;
     box-sizing: border-box;
+    color: #333 !important; /* Принудительно задаем цвет текста */
+    background: white !important; /* Гарантируем белый фон */
 }
 
 .submit-button {
@@ -162,12 +168,15 @@ input[type="text"][name="code"] {
     font-size: 24px;
     text-align: center;
     padding: 15px !important;
+    color: #333 !important;
+    background: white !important;
 }
 
 .resend-code {
     margin-top: 15px;
     text-align: center;
     font-size: 14px;
+    color: #666 !important;
 }
 
 .resend-button {

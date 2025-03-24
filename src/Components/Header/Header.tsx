@@ -3,11 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import './Header.css';
 
 // Исправленный импорт SVG с TypeScript типами
-import { ReactComponent as CartIcon } from './HatIcons/cart.svg';
 import { ReactComponent as SettingsIcon } from './HatIcons/settings.svg';
 import { ReactComponent as ProfileIcon } from './HatIcons/profile.svg';
+import { useAuth } from '../../Context/AuthContext';
 
 const Header: React.FC = () => {
+    const { user } = useAuth();
+
     return (
         <header className="app-header">
             {/* Декоративный логотип без ссылки */}
@@ -23,16 +25,18 @@ const Header: React.FC = () => {
             <nav className="nav-links">
                 <NavLink to="/courses">Курсы</NavLink>
                 <NavLink to="/school">Школа</NavLink>
-                <NavLink to="/timetable">Расписание</NavLink>
+                <NavLink to="/shop">Магазин</NavLink>
             </nav>
 
             <div className="header-icons">
-                <IconLink to="/cart">
-                    <CartIcon className="icon-svg" />
-                </IconLink>
-                <IconLink to="/settings">
-                    <SettingsIcon className="icon-svg" />
-                </IconLink>
+                {/* Настройки: видны админу и учителю */}
+                {user?.role === 'admin' && (
+                    <IconLink to="/settings">
+                        <SettingsIcon className="icon-svg" />
+                    </IconLink>
+                )}
+
+                {/* Профиль: всегда виден */}
                 <IconLink to="/profile">
                     <ProfileIcon className="icon-svg" />
                 </IconLink>

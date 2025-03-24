@@ -1,0 +1,155 @@
+/* Settings.css */
+.settings-page {
+    display: flex;
+    min-height: calc(100vh - 80px);
+    background: #1a1a1a;
+    color: white;
+}
+
+.settings-section {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 25px;
+    border-radius: 8px;
+    animation: fadeIn 0.3s ease-in;
+    width: 100%; /* Ensure full width */
+}
+
+/* Add fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Table container to fix height issues */
+.table-container {
+    position: relative;
+    min-height: 200px; /* Minimum height to prevent layout shifts */
+    transition: height 0.3s ease;
+}
+
+.users-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    transition: opacity 0.2s ease;
+}
+
+.users-table th,
+.users-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.users-table th {
+    background-color: #0057b8;
+    color: white;
+    font-weight: 500;
+}
+
+.users-table tr:hover {
+    background-color: rgba(255,255,255,0.05);
+}
+
+.loading,
+.error,
+.no-results {
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.error {
+    color: #ff4444;
+}
+
+.no-results {
+    color: #aaa;
+    padding: 30px;
+}
+
+/* Используем стили из Profile.css */
+.sidebar {
+    width: 250px;
+    background: #2d2d2d;
+    padding: 20px;
+    border-right: 1px solid #404040;
+    flex-shrink: 0; /* Prevent sidebar from shrinking */
+}
+
+.tab-button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.3s, color 0.3s;
+}
+
+.tab-button:hover {
+    background: #3d3d3d;
+}
+
+.tab-button.active {
+    background: #0057b8;
+    font-weight: 500;
+}
+
+.main-content {
+    flex: 1;
+    padding: 40px;
+    max-width: 1200px;
+    transition: all 0.3s ease; /* Smooth transition for content changes */
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search-select {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background: #2d2d2d; /* Темный фон */
+    color: white;
+    cursor: pointer;
+    appearance: none; /* Убираем стандартную стрелку */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 12px;
+    padding-right: 30px; /* Место для стрелки */
+    transition: border-color 0.2s ease, outline 0.2s ease;
+}
+
+.search-input {
+    flex: 1;
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 1px solid #444;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    caret-color: white;
+    transition: border-color 0.2s ease, outline 0.2s ease;
+}
+
+.search-select option {
+    background: #2d2d2d;
+    color: white;
+}
+
+.search-input:focus,
+.search-select:focus {
+    outline: 2px solid #0057b8;
+    border-color: transparent;
+}

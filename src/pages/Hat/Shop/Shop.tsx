@@ -1,15 +1,15 @@
 import React from 'react';
 import Header from '../../../Components/Header/Header';
 
-const Timetable: React.FC = () => {
+const Shop: React.FC = () => {
     return (
         <>
             <Header />
             <div className="page-content">
-                <h1>Страница курсов</h1>
+                <h2>Каталог товаров пуст</h2>
             </div>
         </>
     );
 };
 
-export default Timetable;
+export default Shop;

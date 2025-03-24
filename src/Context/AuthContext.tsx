@@ -4,7 +4,11 @@ interface User {
     id: string;
     phone: string;
     role: 'admin' | 'teacher' | 'client';
-    // другие поля
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    birthDate?: string;
+    avatar?: string;
 }
 
 interface AuthContextType {
@@ -25,8 +29,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }, []);
 
     const login = (userData: User) => {
-        setUser(userData);
-        localStorage.setItem('user', JSON.stringify(userData));
+        const mergedUser = {
+            ...user, // Сохраняем существующие данные
+            ...userData // Новые данные с сервера
+        };
+        setUser(mergedUser);
+        localStorage.setItem('user', JSON.stringify(mergedUser));
     };
 
     const logout = () => {

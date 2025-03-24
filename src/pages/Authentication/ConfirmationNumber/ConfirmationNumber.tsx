@@ -68,7 +68,7 @@ const ConfirmationNumber: React.FC = () => {
             // 4. Авторизация и переход
             login(registerResponse.user);
             sessionStorage.removeItem('tempRegistrationData');
-            navigate('/timetable');
+            navigate('/shop');
 
         } catch (error) {
             console.error("Ошибка:", error);

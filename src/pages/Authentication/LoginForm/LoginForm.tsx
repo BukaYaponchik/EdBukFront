@@ -83,9 +83,14 @@ const LoginForm: React.FC = () => {
                     id: response.id,
                     phone: response.phone,
                     role: response.role,
+                    firstName: response.firstName, // Добавляем остальные поля
+                    lastName: response.lastName,
+                    email: response.email,
+                    birthDate: response.birthDate,
+                    avatar: response.avatar
                 });
 
-                navigate('/timetable');
+                navigate('/shop');
             } catch (error) {
                 setErrors({
                     ...errors,
