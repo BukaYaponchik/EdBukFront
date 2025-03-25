@@ -1,10 +1,43 @@
-.timetable-page {
+.shop-page {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    background-color: white; /* Устанавливаем белый фон */
-    color: black; /* Измените цвет текста на черный для лучшей видимости на белом фоне */
-    text-shadow: none; /* Убираем тень текста, если она не нужна на белом фоне */
+    min-height: calc(100vh - 80px);
+    background: #333333;
+    color: white;
+}
+
+.shop-sidebar {
+    width: 250px;
+    background: #2d2d2d;
+    padding: 20px;
+    border-right: 1px solid #404040;
+}
+
+.shop-tab {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: none;
+    border: none;
+    color: white;
+    text-align: left;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    font-size: 16px;
+}
+
+.shop-tab:hover {
+    background: #3d3d3d;
+}
+
+.shop-tab.active {
+    background: #0057b8;
+    font-weight: 500;
+}
+
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
