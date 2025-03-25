@@ -9,6 +9,7 @@ interface User {
     email?: string;
     birthDate?: string;
     avatar?: string;
+    courseIds?: string[]; // Add courseIds property to store course IDs
 }
 
 interface AuthContextType {
@@ -30,8 +31,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const login = (userData: User) => {
         const mergedUser = {
-            ...user, // Сохраняем существующие данные
-            ...userData // Новые данные с сервера
+            ...userData,
+            courseIds: userData.courseIds || [] // Добавляем курс IDs из ответа сервера
         };
         setUser(mergedUser);
         localStorage.setItem('user', JSON.stringify(mergedUser));
